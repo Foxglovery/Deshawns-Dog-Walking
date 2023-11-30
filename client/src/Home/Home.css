@@ -1,0 +1,64 @@
+/* img {
+    width: 20%;
+} */
+.home__main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.home__header_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px;
+    
+}
+
+.home__header_container h2 {
+    margin-left: 70px;
+}
+
+
+.home__dog_gallery {
+    
+    
+    
+    width: 75%;
+    margin: auto;
+    
+}
+
+
+.home__dog_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.home__dog_card {
+    width: 150px;
+    text-align: center;
+    margin: 10px;
+}
+
+.home__dog_card img {
+    width: 100%;
+    border-radius: 100%; /* Gives the image a circular shape */
+}
+
+.home__delete_btn {
+    position: absolute;
+    
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-weight: bold;
+    transform: translate(50%, -50%);
+    z-index: 10;
+}
+
+.home__delete_btn:hover {
+    color: red;
+}
