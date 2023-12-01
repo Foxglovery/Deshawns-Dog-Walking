@@ -1,6 +1,7 @@
 import { getAllDogs, getGreeting } from "../apiManager";
 import { useEffect, useState } from "react";
 import "./Home.css";
+import { Link } from "react-router-dom";
 export default function Home() {
   const [greeting, setGreeting] = useState({
     message: "Not Connected to the API",
@@ -39,7 +40,10 @@ export default function Home() {
             <div className="home__dog_card">
               <button className="home__delete_btn">&#x2718;</button>
               <img className="home__dog-img" alt="a dog" src={item.imgURL} />
+              <Link to = {`/dogDetails/${item.id}`} >
               <p>{item.name}</p>
+              </Link>
+              
             </div>
           ))}
         </div>

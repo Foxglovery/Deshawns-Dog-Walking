@@ -5,9 +5,11 @@ import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Home from "./Home/Home";
+import DogDetails from "./DogDetails/DogDetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  //EVERYTHING LOADS APP FIRST BECAUSE OUTLET IS INSIDE OF APP
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
@@ -15,6 +17,9 @@ root.render(
       </Route>
       <Route path="/walkers" element={<App />}>
         <Route index element={<Home />} />
+      </Route>
+      <Route path="/dogDetails" element={<App />}>
+        <Route path=":currentDog" element={<DogDetails />} />
       </Route>
     </Routes>
   </BrowserRouter>
