@@ -221,5 +221,37 @@ app.MapGet("/api/dogs", () =>
     });
 });
 
+app.MapGet("/api/walkers", () =>
+{
+    return walkers.Select(w => new WalkerDTO
+    {
+        Id = w.Id,
+        Name = w.Name,
+        ImgURL = w.ImgURL,
+        City = w.City
+       
+    });
+});
+
+app.MapGet("/api/dogs/{id}", (int id) =>
+{
+    Dog chosenDog = dogs.FirstOrDefault(d => d.Id == id);
+    if (chosenDog == null)
+    {
+        return Results.BadRequest();
+    }
+    return Results.Ok(chosenDog);
+});
+
+app.MapGet("/api/walkers/byDog/{id}", (int id) =>
+{
+    Walker dogWalker = walkers.FirstOrDefault(w => w.Id == id);
+    if (dogWalker == null)
+    {
+        return Results.BadRequest();
+    }
+    return Results.Ok(dogWalker);
+});
+
 
 app.Run();
