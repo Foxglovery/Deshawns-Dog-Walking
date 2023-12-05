@@ -37,3 +37,15 @@ export const getWalkerById = async (walkerId) => {
   const res = await fetch(`/api/walkers/${walkerId}`);
   return res.json();
 }
+
+export const AddCity = async (newCityName) => {
+  const res = await fetch(`/api/cities`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    //THE BODY, FOR THE LOVE OF GOD, HERE IS WHERE THE BODY IS DEFINED
+    body: JSON.stringify({name: newCityName }),
+  });
+  return res.json();
+}

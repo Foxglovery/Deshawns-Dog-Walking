@@ -29,7 +29,7 @@ export default function DogDetails() {
 
         <img className="dog__dog-img" alt="a dog" src={dog.imgURL} />
         <div className="dog__text_wrapper"></div>
-        <p>Walker: {walker.name}</p>
+        <p>{walker.name ? `Walker: ${walker.name}` : "This pooch has yet to be assigned a walker"}</p>
       </div>
     </div>
   );
