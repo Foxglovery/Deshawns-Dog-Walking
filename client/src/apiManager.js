@@ -49,3 +49,14 @@ export const AddCity = async (newCityName) => {
   });
   return res.json();
 }
+
+export const AddADog = async (newDog) => {
+  const res = await fetch(`/api/dogs`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newDog),
+  });
+  return res.json();
+}

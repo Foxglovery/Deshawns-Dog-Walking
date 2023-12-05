@@ -311,6 +311,8 @@ app.MapGet("/api/walkers/byDog/{id}", (int id) =>
     return Results.Ok(dogWalker);
 });
 
+//WRITE ENDPOINT FOR POSTING NEW DOG TODO
+
 app.MapGet("/api/cities", () =>
 {
     return cities.Select(c => new CityDTO

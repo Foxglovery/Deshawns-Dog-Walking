@@ -1,8 +1,9 @@
 import { getAllDogs, getGreeting } from "../../apiManager";
 import { useEffect, useState } from "react";
 import "./Home.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Home() {
+  const navigate = useNavigate();
   const [greeting, setGreeting] = useState({
     message: "Not Connected to the API",
   });
@@ -24,6 +25,10 @@ export default function Home() {
       });
   }, []);
 
+  const handleClick = () => {
+    navigate("/addDog")
+  };
+
   return (
     <>
       <p>{greeting.message}</p>
@@ -32,7 +37,7 @@ export default function Home() {
           <header className="home__header_container">
             <div className="spacer"></div>
             <h2>All Dogs</h2>
-            <button className="home__add_dog_btn">Add A Dog</button>
+            <button  className="home__add_dog_btn" onClick={handleClick}>Add A Dog</button>
           </header>
 
           <div className="home__dog_container">
