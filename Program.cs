@@ -1,5 +1,6 @@
 using DeshawnsDogWalking.Models;
 using DeshawnsDogWalking.Models.DTOs;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 List<Dog> dogs = new List<Dog>()
 {
@@ -242,7 +243,7 @@ app.MapGet("/api/dogs", () =>
         CityId = d.CityId,
         WalkerId = d.WalkerId,
         ImgURL = d.ImgURL
-        
+
     });
 });
 
@@ -254,7 +255,7 @@ app.MapGet("/api/walkers", () =>
         Name = w.Name,
         ImgURL = w.ImgURL,
         Cities = w.Cities
-       
+
     });
 });
 
@@ -262,8 +263,8 @@ app.MapGet("/api/walkers", () =>
 // {   //makes a list of walkerCity entries with matching walker id
 //     List<WalkerCity> walkersForCity = walkerCities.Where(wc => wc.CityId == id).ToList();
 //     List<Walker>  = walkersForCity.Select(wcw => cities.First(c => c.Id == wcw.CityId)).ToList();
-    
-    
+
+
 // });
 
 app.MapGet("/api/walkerCities/{cityId}", (int cityId) =>
@@ -272,7 +273,7 @@ app.MapGet("/api/walkerCities/{cityId}", (int cityId) =>
     //initialize a new list of walkers
     List<Walker> walkersForCity = new List<Walker>();
     //for each find the matches on walker list
-    foreach(var walkerCity in walkerCitiesForCity)
+    foreach (var walkerCity in walkerCitiesForCity)
     {
         Walker matchingWalker = walkers.FirstOrDefault(w => w.Id == walkerCity.WalkerId);
 
@@ -282,12 +283,12 @@ app.MapGet("/api/walkerCities/{cityId}", (int cityId) =>
         }
 
     }
-        if (walkersForCity.Count == 0)
+    if (walkersForCity.Count == 0)
     {
         return Results.NotFound("No Walkers Found For This City");
     }
     return Results.Ok(walkersForCity);
-   
+
 });
 
 app.MapGet("/api/dogs/{id}", (int id) =>
@@ -310,12 +311,29 @@ app.MapGet("/api/walkers/byDog/{id}", (int id) =>
     return Results.Ok(dogWalker);
 });
 
-app.MapGet("/api/cities", () => {
+app.MapGet("/api/cities", () =>
+{
     return cities.Select(c => new CityDTO
     {
         Id = c.Id,
         Name = c.Name,
         Walkers = c.Walkers
+    });
+});
+
+app.MapPost("/api/cities", (City city) =>
+{   //create new id in order
+    city.Id = cities.Max(c => c.Id) + 1;
+    if (city.Name == "")
+    {
+        return Results.BadRequest();
+    }
+    cities.Add(city);
+    return Results.Created($"/api/cities/{city.Id}", new CityDTO
+    {
+        Id = city.Id,
+        Name = city.Name,
+        Walkers = city.Walkers
     });
 });
 
