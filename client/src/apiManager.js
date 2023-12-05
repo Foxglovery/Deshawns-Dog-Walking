@@ -22,3 +22,18 @@ export const walkerByDog = async (walkerId) => {
   const res = await fetch(`/api/walkers/byDog/${walkerId}`);
   return res.json();
 }
+
+export const getAllCities = async () => {
+  const res = await fetch("/api/cities");
+  return res.json();
+}
+
+export const getCityWalkers = async (cityId) => {
+  const res = await fetch(`/api/walkerCities/${cityId}`);
+  return res.json();
+}
+
+export const getWalkerById = async (walkerId) => {
+  const res = await fetch(`/api/walkers/${walkerId}`);
+  return res.json();
+}
