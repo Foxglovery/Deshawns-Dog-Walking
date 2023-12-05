@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import Home from "./Components/Home/Home";
 import DogDetails from "./Components/DogDetails/DogDetails";
 import Walkers from "./Components/Walkers/Walkers";
+import Cities from "./Components/Cities/Cities";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,6 +19,10 @@ root.render(
       </Route>
       <Route path="/walkers" element={<App />}>
         <Route index element={<Walkers />} />
+      </Route>
+      <Route path="/cities" element={<App />}>
+        <Route index element={<Cities />}/>
+
       </Route>
       <Route path="/dogDetails" element={<App />}>
         <Route path=":currentDog" element={<DogDetails />} />
