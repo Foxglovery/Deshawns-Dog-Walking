@@ -313,6 +313,24 @@ app.MapGet("/api/walkers/byDog/{id}", (int id) =>
 
 //WRITE ENDPOINT FOR POSTING NEW DOG TODO
 
+app.MapPost("/api/dogs", (Dog dog) =>
+{
+    dog.Id = dogs.Max(d => d.Id) + 1;
+    if (dog.Name == "" || dog.CityId == null)
+    {
+        return Results.BadRequest();
+    }
+    dogs.Add(dog);
+    return Results.Created($"/api/dogs/{dog.Id}", new DogDTO
+    {
+        Id = dog.Id,
+        Name = dog.Name,
+        ImgURL = dog.ImgURL,
+        CityId = dog.CityId,
+        WalkerId = dog.WalkerId
+    });
+});
+
 app.MapGet("/api/cities", () =>
 {
     return cities.Select(c => new CityDTO

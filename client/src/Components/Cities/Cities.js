@@ -22,7 +22,7 @@ export default function Cities() {
         const remainingLetters = ui.slice(1).toLowerCase();
         return firstLetter + remainingLetters;
     })
-    const capitalized = capitalizedInput.join(' ');
+    const capitalized = capitalizedInput.join("")
     setNewCityName(capitalized);
   };
   const handleSubmit = async (e) => {
