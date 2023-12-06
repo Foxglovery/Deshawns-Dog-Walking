@@ -291,6 +291,22 @@ app.MapGet("/api/walkerCities/{cityId}", (int cityId) =>
 
 });
 
+app.MapGet("/api/walkers/{walkerId}", (int walkerId) =>
+{   //grab specific walker
+    Walker walker = walkers.FirstOrDefault(w => w.Id == walkerId);
+    //make of list of cities for that walker
+    List<WalkerCity> walkerCitiesForWalker = walkerCities.Where(wc => wc.WalkerId == walkerId).ToList();
+    //make list of city entries for those walkercity entries
+    List<City> citiesForWalker = walkerCitiesForWalker.Select(wc => cities.First(c => c.Id == wc.CityId)).ToList();
+    //add list of city entries to cities property
+    walker.Cities = citiesForWalker;
+    if (walker == null)
+    {
+        return Results.BadRequest();
+    }
+    return Results.Ok(walker);    
+});
+
 app.MapGet("/api/dogs/{id}", (int id) =>
 {
     Dog chosenDog = dogs.FirstOrDefault(d => d.Id == id);
