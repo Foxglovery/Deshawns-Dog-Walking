@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllCities, getAllWalkers } from "../../apiManager";
 import { Link } from "react-router-dom";
 import "./Walkers.css"
-import CityDropdown from "../Filter/Dropdown";
+import CityDropdown from "../Filter/CityDropdown";
 
 
 export default function Walkers() {
