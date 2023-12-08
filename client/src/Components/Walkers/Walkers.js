@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  getAllCities,
-  getAllDogs,
-  getAllWalkers,
-  getWalkerById,
-} from "../../apiManager";
+import { getAllCities, getAllWalkers, getWalkerById } from "../../apiManager";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./Walkers.css";
 import CityDropdown from "../Filter/CityDropdown";
@@ -14,24 +9,15 @@ export default function Walkers() {
   const [walkers, setWalkers] = useState([]);
   const [cities, setCities] = useState([]);
   const [filteredWalkers, setFilteredWalkers] = useState([]);
-  const [isDisplayed, setIsDisplayed] = useState(false);
-  const [allDogs, setAllDogs] = useState([]);
-  const [filteredDogs, setFilteredDogs] = useState([]);
-  const [walkerIdToAssign, setWalkerIdToAssign] = useState(0);
-  const [walkerToAssign, setWalkerToAssign] = useState({});
-  const [citiesForWalker, setCitiesForWalker] = useState([]);
-  const [displayedWalkers, setDisplayedWalkers] = useState({});
-  
-
+  const [detailsOpen, setDetailsOpen] = useState({});
+  const [walkerCities, setWalkerCities] = useState([]);
+  const [checkedState, setCheckedState] = useState(
+    new Array(walkerCities.length).fill(true)
+  );
 
   useEffect(() => {
     getAllWalkers()
       .then(setWalkers)
-      .catch(() => {
-        console.log("API not connected");
-      });
-    getAllDogs()
-      .then(setAllDogs)
       .catch(() => {
         console.log("API not connected");
       });
@@ -45,39 +31,26 @@ export default function Walkers() {
       });
   }, []);
 
-  useEffect(() => {
-    if (walkerToAssign.cities) {
-      const filteredCitiesForWalker = walkerToAssign.cities.map((c) => c.id);
-      console.log("Filtered cities for walker should be an array of int", filteredCitiesForWalker)
-      setCitiesForWalker(filteredCitiesForWalker);
-    }
-  }, [walkerToAssign]);
+  const handleClick = (id) => {
+    navigate(`/walkerDogs/${id}`);
+  };
 
-  useEffect(() => {
-    console.log("cities for walker", citiesForWalker)
-    const dogsInCity = allDogs.filter((d) =>
-    citiesForWalker.includes(d.cityId)
-    );
-    console.log("dogs in city", dogsInCity)
-    const unpairedDogs = dogsInCity.filter(dog => dog.walkerId == null);
-    setFilteredDogs(unpairedDogs);
-  }, [citiesForWalker, allDogs]);
-
-  const handleToggle = (id) => {
-    setWalkerIdToAssign(id);
-    //used this instead of original toggle, to stop each one from opening.
-    setDisplayedWalkers(prevState => ({
+  const handleDetails = (id) => {
+    setDetailsOpen((prevState) => ({
       ...prevState,
-      [id]: !prevState[id]
+      [id]: !prevState[id],
     }));
     getWalkerById(id).then((data) => {
-      setWalkerToAssign(data);
+      const citiesArray = data.cities.map((c) => c.id);
+      setWalkerCities(citiesArray);
     });
-
-    setIsDisplayed(!isDisplayed);
   };
-  const handleClick = (id) => {
-    navigate(`/walkerDogs/${id}`)
+
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+    index === position ? !item : item
+    );
+    setCheckedState(updatedCheckedState);
   }
 
   return (
@@ -106,22 +79,43 @@ export default function Walkers() {
                 <Link to={`/walkerDetails/${w.id}`}>
                   <p>{w.name}</p>
                 </Link>
+                {/* had to abstract handleDetails into anonymous to prevent infinite rerender */}
+                <button onClick={() => handleDetails(w.id)}>
+                  Edit Walker Info
+                </button>
+                {detailsOpen[w.id] && (<>
+                  
+                  <fieldset>
+                        <legend>Choose your walker's Cities:</legend>
+                        
+                        {w.cities.map(({name}, index) => (
+                          //if walkercities.includes c.Id, then render the box checked
+                          
+                        <div key={index}>
+                          <input
+                            type="checkbox"
+                            id={`custom-checkbox-${index}`}
+                            name={name}
+                            value={name}
+                            checked = {checkedState[index]}
+                            onChange={() => handleOnChange(index)}
+                            
+                          />
+                          <label for={`custom-checkbox-${index}`}>{name}</label>
+                        </div>))}
+
+                        
+                      </fieldset>
+                    <button>Submit</button>
+                  
+                </>)}
+
                 <button
                   className="add_dog_btn"
                   onClick={() => handleClick(w.id)}
                 >
                   &#10133; &#128021;
                 </button>
-                {displayedWalkers[w.id] && (
-                  <ul>
-                    {filteredDogs.map((dog) => (
-                      <Link to={`/dogDetails/${dog.id}`}>
-                      <li key={dog.id}>{dog.name}</li>
-                      </Link>
-                      
-                    ))}
-                  </ul>
-                )}
               </div>
             ))}
           </div>
