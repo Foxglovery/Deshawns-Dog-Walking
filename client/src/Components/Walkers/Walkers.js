@@ -5,11 +5,12 @@ import {
   getAllWalkers,
   getWalkerById,
 } from "../../apiManager";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./Walkers.css";
 import CityDropdown from "../Filter/CityDropdown";
 
 export default function Walkers() {
+  const navigate = useNavigate();
   const [walkers, setWalkers] = useState([]);
   const [cities, setCities] = useState([]);
   const [filteredWalkers, setFilteredWalkers] = useState([]);
@@ -20,6 +21,7 @@ export default function Walkers() {
   const [walkerToAssign, setWalkerToAssign] = useState({});
   const [citiesForWalker, setCitiesForWalker] = useState([]);
   const [displayedWalkers, setDisplayedWalkers] = useState({});
+  
 
 
   useEffect(() => {
@@ -46,14 +48,17 @@ export default function Walkers() {
   useEffect(() => {
     if (walkerToAssign.cities) {
       const filteredCitiesForWalker = walkerToAssign.cities.map((c) => c.id);
+      console.log("Filtered cities for walker should be an array of int", filteredCitiesForWalker)
       setCitiesForWalker(filteredCitiesForWalker);
     }
   }, [walkerToAssign]);
 
   useEffect(() => {
+    console.log("cities for walker", citiesForWalker)
     const dogsInCity = allDogs.filter((d) =>
-      citiesForWalker.includes(d.cityId)
+    citiesForWalker.includes(d.cityId)
     );
+    console.log("dogs in city", dogsInCity)
     const unpairedDogs = dogsInCity.filter(dog => dog.walkerId == null);
     setFilteredDogs(unpairedDogs);
   }, [citiesForWalker, allDogs]);
@@ -71,6 +76,9 @@ export default function Walkers() {
 
     setIsDisplayed(!isDisplayed);
   };
+  const handleClick = (id) => {
+    navigate(`/walkerDogs/${id}`)
+  }
 
   return (
     <>
@@ -100,7 +108,7 @@ export default function Walkers() {
                 </Link>
                 <button
                   className="add_dog_btn"
-                  onClick={() => handleToggle(w.id)}
+                  onClick={() => handleClick(w.id)}
                 >
                   &#10133; &#128021;
                 </button>

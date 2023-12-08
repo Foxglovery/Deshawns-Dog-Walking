@@ -6,7 +6,7 @@ List<Dog> dogs = new List<Dog>()
 {
     new Dog()
     {
-        Id = 0,
+        Id = 1,
         Name = "Sir HuffNPuff",
         CityId = 0,
         WalkerId = 0,
@@ -14,7 +14,7 @@ List<Dog> dogs = new List<Dog>()
     },
     new Dog()
     {
-        Id = 1,
+        Id = 2,
         Name = "Sproket",
         CityId = 1,
         WalkerId = 2,
@@ -22,7 +22,7 @@ List<Dog> dogs = new List<Dog>()
     },
     new Dog()
     {
-        Id = 2,
+        Id = 3,
         Name = "Frouzie",
         CityId = 3,
         WalkerId = 1,
@@ -30,7 +30,7 @@ List<Dog> dogs = new List<Dog>()
     },
     new Dog()
     {
-        Id = 3,
+        Id = 4,
         Name = "Molly",
         CityId = 2,
         WalkerId = 4,
@@ -38,7 +38,7 @@ List<Dog> dogs = new List<Dog>()
     },
     new Dog()
     {
-        Id = 4,
+        Id = 5,
         Name = "Orville",
         CityId = 4,
         WalkerId = 3,
@@ -46,7 +46,7 @@ List<Dog> dogs = new List<Dog>()
     },
     new Dog()
     {
-        Id = 5,
+        Id = 6,
         Name = "Mr. Peanut",
         CityId = 5,
         WalkerId = 2,
@@ -54,7 +54,7 @@ List<Dog> dogs = new List<Dog>()
     },
     new Dog()
     {
-        Id = 6,
+        Id = 7,
         Name = "Bertram",
         CityId = 1,
         WalkerId = 1,
@@ -62,10 +62,34 @@ List<Dog> dogs = new List<Dog>()
     },
     new Dog()
     {
-        Id = 7,
+        Id = 8,
         Name = "Pnubbins",
         CityId = 2,
         WalkerId = 5,
+        ImgURL = "https://upload.wikimedia.org/wikipedia/commons/b/b2/Longhaired_Dachshund_portrait.jpg"
+    },
+    new Dog()
+    {
+        Id = 9,
+        Name = "Cinamorg",
+        CityId = 1,
+        WalkerId = null,
+        ImgURL = "https://upload.wikimedia.org/wikipedia/commons/b/b2/Longhaired_Dachshund_portrait.jpg"
+    },
+    new Dog()
+    {
+        Id = 10,
+        Name = "Basic Betty",
+        CityId = 3,
+        WalkerId = null,
+        ImgURL = "https://upload.wikimedia.org/wikipedia/commons/b/b2/Longhaired_Dachshund_portrait.jpg"
+    },
+    new Dog()
+    {
+        Id = 11,
+        Name = "Ruckers",
+        CityId = 6,
+        WalkerId = null,
         ImgURL = "https://upload.wikimedia.org/wikipedia/commons/b/b2/Longhaired_Dachshund_portrait.jpg"
     }
 };
@@ -74,32 +98,32 @@ List<City> cities = new List<City>()
 {
     new City()
     {
-        Id = 0,
+        Id = 1,
         Name = "Columbia, TN"
     },
     new City()
     {
-        Id = 1,
+        Id = 2,
         Name = "Spring Hill, TN"
     },
     new City()
     {
-        Id = 2,
+        Id = 3,
         Name = "Franklin, TN"
     },
     new City()
     {
-        Id = 3,
+        Id = 4,
         Name = "Signal Mountain, TN"
     },
     new City()
     {
-        Id = 4,
+        Id = 5,
         Name = "Antioch, TN"
     },
     new City()
     {
-        Id = 5,
+        Id = 6,
         Name = "Soddy-Daisy, TN"
     },
 };
@@ -108,37 +132,37 @@ List<Walker> walkers = new List<Walker>()
 {
     new Walker()
     {
-        Id = 0,
+        Id = 1,
         Name = "Groogery Adlerburb",
         ImgURL = "https://images.pixexid.com/a-persons-face-expressing-a-sense-of-accomplishment-and-satisfaction-as-they-su-bbjsmazg.webp?h=700&q=70"
     },
     new Walker()
     {
-        Id = 1,
+        Id = 2,
         Name = "Euphigenia Doubtfire",
         ImgURL = "https://images.pixexid.com/a-persons-face-expressing-a-sense-of-accomplishment-and-satisfaction-as-they-su-bbjsmazg.webp?h=700&q=70"
     },
     new Walker()
     {
-        Id = 2,
+        Id = 3,
         Name = "Arlington Muskwrath",
         ImgURL = "https://images.pixexid.com/a-persons-face-expressing-a-sense-of-accomplishment-and-satisfaction-as-they-su-bbjsmazg.webp?h=700&q=70"
     },
     new Walker()
     {
-        Id = 3,
+        Id = 4,
         Name = "Jorbilez Runitolk",
         ImgURL = "https://images.pixexid.com/a-persons-face-expressing-a-sense-of-accomplishment-and-satisfaction-as-they-su-bbjsmazg.webp?h=700&q=70"
     },
     new Walker()
     {
-        Id = 4,
+        Id = 5,
         Name = "Sassimere Palustrade",
         ImgURL = "https://images.pixexid.com/a-persons-face-expressing-a-sense-of-accomplishment-and-satisfaction-as-they-su-bbjsmazg.webp?h=700&q=70"
     },
     new Walker()
     {
-        Id = 5,
+        Id = 6,
         Name = "Cinnora Chucklefrooth",
         ImgURL = "https://images.pixexid.com/a-persons-face-expressing-a-sense-of-accomplishment-and-satisfaction-as-they-su-bbjsmazg.webp?h=700&q=70"
     }
@@ -146,12 +170,6 @@ List<Walker> walkers = new List<Walker>()
 
 List<WalkerCity> walkerCities = new List<WalkerCity>()
 {
-    new WalkerCity()
-    {
-        Id = 0,
-        CityId = 0,
-        WalkerId = 0
-    },
     new WalkerCity()
     {
         Id = 1,
@@ -185,9 +203,10 @@ List<WalkerCity> walkerCities = new List<WalkerCity>()
     new WalkerCity()
     {
         Id = 6,
-        CityId = 5,
-        WalkerId = 3
+        CityId = 6,
+        WalkerId = 6
     },
+    
     new WalkerCity()
     {
         Id = 7,
@@ -198,7 +217,7 @@ List<WalkerCity> walkerCities = new List<WalkerCity>()
     {
         Id = 8,
         CityId = 4,
-        WalkerId = 0
+        WalkerId = 3
     },
     new WalkerCity()
     {
@@ -371,6 +390,22 @@ app.MapPost("/api/cities", (City city) =>
         Name = city.Name,
         Walkers = city.Walkers
     });
+});
+
+app.MapPut("/api/dogs/{id}", (int id, Dog dog) =>
+{   //grab dog to update
+    Dog dogToUpdate = dogs.FirstOrDefault(d => d.Id == id);
+    //make sure dog exists
+    if (dogToUpdate == null)
+    {
+        return Results.BadRequest();
+    }
+    if (id != dog.Id)
+    {
+        return Results.BadRequest();
+    }
+    dogToUpdate.WalkerId = dog.WalkerId;
+    return Results.NoContent();
 });
 
 
