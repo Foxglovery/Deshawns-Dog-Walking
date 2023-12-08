@@ -10,21 +10,20 @@ const CityDropdown = ({ walkers, cities, setFilteredWalkers }) => {
       setFilteredWalkers(walkers);
     }
   }, [walkers, setFilteredWalkers]);
+  
+  
   const handleInputChange = (e) => {
     const selectedCityId = e.target.value;
     setSelectedCity(selectedCityId);
     console.log("cityid", selectedCityId);
-    getCityWalkers(parseInt(selectedCityId)).then((data) => {
-      setCityWalkers(data);
-    });
-    if (walkers) {
-      if (selectedCityId === "") {
+    if (selectedCityId === "") {
         setFilteredWalkers(walkers);
       } else {
-        console.log("cityWalkers", cityWalkers);
-        setFilteredWalkers(cityWalkers);
+        getCityWalkers(parseInt(selectedCityId)).then((data) => {
+          console.log("cityWalkers", data);
+          setFilteredWalkers(data);
+        });
       }
-    }
   };
 
   return (

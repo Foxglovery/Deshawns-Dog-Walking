@@ -60,3 +60,17 @@ export const AddADog = async (newDog) => {
   });
   return res.json();
 }
+
+export const AssignDog = async (dogId, dogToUpdate) => {
+  const res = await fetch(`/api/dogs/${dogId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dogToUpdate),
+  });
+  if (!res.ok) {
+    throw new Error(`Error: ${res.status}`);
+  }
+  return 'Update Successful'
+}
