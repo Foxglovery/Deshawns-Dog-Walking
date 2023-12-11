@@ -74,3 +74,18 @@ export const AssignDog = async (dogId, dogToUpdate) => {
   }
   return 'Update Successful'
 }
+
+
+export const UpdateWalkerCities = async (walker) => {
+  const res = await fetch(`/api/walkerCities`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(walker),
+  });
+  if (!res.ok) {
+    throw new Error(`Error: ${res.status}`);
+  }
+  return 'Update Successful'
+}

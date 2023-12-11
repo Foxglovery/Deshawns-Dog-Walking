@@ -206,7 +206,7 @@ List<WalkerCity> walkerCities = new List<WalkerCity>()
         CityId = 6,
         WalkerId = 6
     },
-    
+
     new WalkerCity()
     {
         Id = 7,
@@ -323,7 +323,7 @@ app.MapGet("/api/walkers/{walkerId}", (int walkerId) =>
     {
         return Results.BadRequest();
     }
-    return Results.Ok(walker);    
+    return Results.Ok(walker);
 });
 
 app.MapGet("/api/dogs/{id}", (int id) =>
@@ -406,6 +406,22 @@ app.MapPut("/api/dogs/{id}", (int id, Dog dog) =>
     }
     dogToUpdate.WalkerId = dog.WalkerId;
     return Results.NoContent();
+});
+
+app.MapPost("/api/walkerCities", (Walker walker) =>
+{
+walkerCities = walkerCities.Where(wc => wc.WalkerId != walker.Id).ToList();
+
+foreach (City city in walker.Cities)
+{
+    WalkerCity newWC = new WalkerCity
+    {
+        WalkerId = walker.Id,
+        CityId = city.Id
+    };
+    newWC.Id = walkerCities.Count > 0 ? walkerCities.Max(wc => wc.Id) + 1 : 1;
+    walkerCities.Add(newWC);
+}
 });
 
 

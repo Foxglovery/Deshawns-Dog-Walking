@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllCities, getAllWalkers, getWalkerById } from "../../apiManager";
+import {
+  UpdateWalkerCities,
+  getAllCities,
+  getAllWalkers,
+  getWalkerById,
+} from "../../apiManager";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./Walkers.css";
 import CityDropdown from "../Filter/CityDropdown";
@@ -7,13 +12,10 @@ import CityDropdown from "../Filter/CityDropdown";
 export default function Walkers() {
   const navigate = useNavigate();
   const [walkers, setWalkers] = useState([]);
+  const [walker, setWalker] = useState({});
   const [cities, setCities] = useState([]);
   const [filteredWalkers, setFilteredWalkers] = useState([]);
   const [detailsOpen, setDetailsOpen] = useState({});
-  const [walkerCities, setWalkerCities] = useState([]);
-  const [checkedState, setCheckedState] = useState(
-    new Array(walkerCities.length).fill(true)
-  );
 
   useEffect(() => {
     getAllWalkers()
@@ -36,22 +38,44 @@ export default function Walkers() {
   };
 
   const handleDetails = (id) => {
-    setDetailsOpen((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
+    setDetailsOpen(() => ({
+      [id]: true,
     }));
     getWalkerById(id).then((data) => {
-      const citiesArray = data.cities.map((c) => c.id);
-      setWalkerCities(citiesArray);
+      setWalker(data);
     });
   };
 
-  const handleOnChange = (position) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-    index === position ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
-  }
+  const handleOnChange = (event) => {
+    const cityToBeFound = cities.find((c) => c.id === event.target.value * 1);
+    console.log(cityToBeFound);
+
+    //if uncheck a city and city is in cityArray, needs to be removed
+    //THIS RIGHT HERE IS WHERE THE MAGIC HAPPENS, THANK YOU EDWIN
+    if (walker.cities.some((c) => cityToBeFound.id === c.id)) {
+      const filteredCites = walker.cities.filter(
+        (fc) => cityToBeFound.id !== fc.id
+      );
+      const copy = { ...walker };
+      copy.cities = filteredCites;
+      setWalker(copy);
+    } else {
+      const copy = { ...walker };
+      copy.cities.push(cityToBeFound);
+      setWalker(copy);
+    }
+  };
+
+  const handleSubmit = () => {
+    UpdateWalkerCities(walker).then(() => {
+      getAllWalkers()
+        .then(setWalkers)
+        .catch(() => {
+          console.log("API not connected");
+        });
+      setDetailsOpen({});
+    });
+  };
 
   return (
     <>
@@ -83,32 +107,32 @@ export default function Walkers() {
                 <button onClick={() => handleDetails(w.id)}>
                   Edit Walker Info
                 </button>
-                {detailsOpen[w.id] && (<>
-                  
-                  <fieldset>
-                        <legend>Choose your walker's Cities:</legend>
-                        
-                        {w.cities.map(({name}, index) => (
-                          //if walkercities.includes c.Id, then render the box checked
-                          
+                {detailsOpen[w.id] && (
+                  <>
+                    <fieldset>
+                      <legend>Choose your walker's Cities:</legend>
+                      {/* map over ALL cities instead of walkers cities */}
+                      {cities.map((city, index) => (
                         <div key={index}>
                           <input
                             type="checkbox"
                             id={`custom-checkbox-${index}`}
-                            name={name}
-                            value={name}
-                            checked = {checkedState[index]}
-                            onChange={() => handleOnChange(index)}
-                            
+                            name={city.name}
+                            value={city.id}
+                            checked={walker.cities?.some(
+                              (c) => city.id === c.id
+                            )}
+                            onChange={handleOnChange}
                           />
-                          <label for={`custom-checkbox-${index}`}>{name}</label>
-                        </div>))}
-
-                        
-                      </fieldset>
-                    <button>Submit</button>
-                  
-                </>)}
+                          <label for={`custom-checkbox-${index}`}>
+                            {city.name}
+                          </label>
+                        </div>
+                      ))}
+                    </fieldset>
+                    <button onClick={handleSubmit}>Submit</button>
+                  </>
+                )}
 
                 <button
                   className="add_dog_btn"
