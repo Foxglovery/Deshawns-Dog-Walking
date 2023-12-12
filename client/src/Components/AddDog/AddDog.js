@@ -26,26 +26,26 @@ export default function AddDog() {
       [name]: value,
     });
   };
-//when user submits, call post method on newDog
-const handleSubmit = async (e) => {
+  //when user submits, call post method on newDog
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // if (newDog.name.trim() === "")
     // {
     //     return;
     // }
-    try
-    {
-        const addedDog = await AddADog(newDog);
-        navigate(`/dogDetails/${addedDog.id}`)
-    }
-    catch (error)
-    {
-        window.alert(`Error adding dog.
+    try {
+      const addedDog = await AddADog(newDog);
+      navigate(`/dogDetails/${addedDog.id}`);
+    } catch (error) {
+      window.alert(
+        `Error adding dog.
 
-Did you select a city?`, error);
+Did you select a city?`,
+        error
+      );
     }
-}
-//api call will take newDog
+  };
+  //api call will take newDog
   return (
     <div className="addDog__form_container">
       <form action="/" className="dog_form" onSubmit={handleSubmit}>
@@ -69,10 +69,9 @@ Did you select a city?`, error);
             <DogCityDropdown
               selectedCity={selectedCity}
               setSelectedCity={setSelectedCity}
-            
             />
           }
-          <button type="submit" >Submit</button>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>

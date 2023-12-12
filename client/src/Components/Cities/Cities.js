@@ -16,26 +16,26 @@ export default function Cities() {
   }, []);
 
   const handleInputChange = (e) => {
-    const userInput = e.target.value.split(' ');
-    const capitalizedInput = userInput.map(ui => {
-        const firstLetter = ui.charAt(0).toUpperCase();
-        const remainingLetters = ui.slice(1).toLowerCase();
-        return firstLetter + remainingLetters;
-    })
-    const capitalized = capitalizedInput.join("")
+    const userInput = e.target.value.split(" ");
+    const capitalizedInput = userInput.map((ui) => {
+      const firstLetter = ui.charAt(0).toUpperCase();
+      const remainingLetters = ui.slice(1).toLowerCase();
+      return firstLetter + remainingLetters;
+    });
+    const capitalized = capitalizedInput.join("");
     setNewCityName(capitalized);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newCityName.trim() === "") {
-        return;
+      return;
     }
     try {
-        const newCity = await AddCity(newCityName);
-        setAllCities((prevCities) => [...prevCities, newCity]);
-        setNewCityName("");
+      const newCity = await AddCity(newCityName);
+      setAllCities((prevCities) => [...prevCities, newCity]);
+      setNewCityName("");
     } catch (error) {
-        console.log("Failed to add city", error);
+      console.log("Failed to add city", error);
     }
   };
 
@@ -44,7 +44,12 @@ export default function Cities() {
       <div>
         <form onSubmit={handleSubmit}>
           <label for="cityName">Add A City</label>
-          <input id="cityName" type="text" value={newCityName} onChange={handleInputChange}></input>
+          <input
+            id="cityName"
+            type="text"
+            value={newCityName}
+            onChange={handleInputChange}
+          ></input>
           <button type="submit">Add City</button>
         </form>
       </div>
