@@ -103,3 +103,17 @@ export const DeleteDog = async (dogId) => {
   }
   return 'Delete Successful'
 }
+
+export const DeleteWalker = async (walkerId) => {
+  const res = await fetch(`/api/walkers/${walkerId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`Error: ${res.status}`);
+  }
+  return 'Delete Successful'
+
+}

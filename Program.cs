@@ -436,5 +436,22 @@ app.MapDelete("/api/dogs/{dogId}", (int dogId) =>
     return Results.NoContent();
 });
 
+app.MapDelete("/api/walkers/{walkerId}", (int walkerId) =>
+{
+    Walker walkerToDelete = walkers.FirstOrDefault(w => w.Id == walkerId);
+    List<Dog>dogsToUnassign = dogs.Where(d => d.WalkerId == walkerId).ToList();
+
+    if (walkerToDelete == null || walkerId != walkerToDelete.Id)
+    {
+        return Results.BadRequest();
+    }
+    //I cant believe that worked :)
+    foreach (Dog dog in dogsToUnassign)
+    {
+        dog.WalkerId = null;
+    }
+    walkers.Remove(walkerToDelete);
+    return Results.NoContent();
+});
 
 app.Run();

@@ -22,7 +22,7 @@ export default function WalkerDogs() {
   useEffect(() => {
     //if cities has value
     if (citiesArray.length > 0) {
-        //get all dogs
+      //get all dogs
       getAllDogs().then((data) => {
         //get only dogs in those cities
         const localDogs = data.filter((d) => citiesArray.includes(d.cityId));

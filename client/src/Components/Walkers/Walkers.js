@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  DeleteWalker,
   UpdateWalkerCities,
   getAllCities,
   getAllWalkers,
@@ -36,8 +37,8 @@ export default function Walkers() {
   const handleClick = (id) => {
     navigate(`/walkerDogs/${id}`);
   };
-//here is where the details open, changing the value of id to true made them only open one at a time.
-//look at old branch to see difference
+  //here is where the details open, changing the value of id to true made them only open one at a time.
+  //look at old branch to see difference
   const handleDetails = (id) => {
     setDetailsOpen(() => ({
       [id]: true,
@@ -77,6 +78,16 @@ export default function Walkers() {
       setDetailsOpen({});
     });
   };
+  const getAndSetWalkers = () => {
+    getAllWalkers().then((data) => {
+      setWalkers(data);
+    });
+  };
+  const HandleDelete = (walkerId) => {
+    DeleteWalker(walkerId).then(() => {
+      getAndSetWalkers();
+    });
+  };
 
   return (
     <>
@@ -95,15 +106,20 @@ export default function Walkers() {
           <div className="walker__walker_container">
             {filteredWalkers.map((w) => (
               <div key={w.id} className="walker__walker_card">
-                <button className="walker__delete_btn">&#x2718;</button>
+                <button
+                  onClick={() => HandleDelete(w.id)}
+                  className="walker__delete_btn"
+                >
+                  &#x2718;
+                </button>
                 <img
                   className="walker__walker-img"
                   alt="a walker"
                   src={w.imgURL}
                 />
-                <Link to={`/walkerDetails/${w.id}`}>
-                  <p>{w.name}</p>
-                </Link>
+
+                <p>{w.name}</p>
+
                 {/* had to abstract handleDetails into anonymous to prevent infinite rerender */}
                 <button onClick={() => handleDetails(w.id)}>
                   Edit Walker Info
