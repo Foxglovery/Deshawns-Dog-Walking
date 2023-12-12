@@ -1,4 +1,4 @@
-import { getAllDogs, getGreeting } from "../../apiManager";
+import { DeleteDog, getAllDogs, getGreeting } from "../../apiManager";
 import { useEffect, useState } from "react";
 import "./Home.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,10 +25,25 @@ export default function Home() {
         console.log("API not connected");
       });
   }, []);
+  
 
   const handleClick = () => {
     navigate("/addDog")
   };
+
+  const HandleDelete = (dogId) => {
+    
+    DeleteDog(dogId).then(() => {
+      getAndSetDogs()
+    })
+    
+  }
+
+  const getAndSetDogs = () => {
+    getAllDogs().then((data) => {
+      setAllDogs(data)
+    })
+  }
 
   return (
     <>
@@ -44,7 +59,9 @@ export default function Home() {
           <div className="home__dog_container">
             {allDogs.map((item) => (
               <div className="home__dog_card">
-                <button className="home__delete_btn">&#x2718;</button>
+                <button
+                onClick={() => HandleDelete(item.id)} 
+                className="home__delete_btn">&#x2718;</button>
                 <img className="home__dog-img" alt="a dog" src={item.imgURL || defaultImageURL} />
                 <Link to={`/dogDetails/${item.id}`}>
                   <p>{item.name}</p>

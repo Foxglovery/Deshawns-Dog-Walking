@@ -424,5 +424,17 @@ foreach (City city in walker.Cities)
 }
 });
 
+app.MapDelete("/api/dogs/{dogId}", (int dogId) =>
+{
+    Dog dogToDelete = dogs.FirstOrDefault(d => d.Id == dogId);
+
+    if (dogToDelete == null || dogId != dogToDelete.Id)
+    {
+        return Results.BadRequest();
+    }
+    dogs.Remove(dogToDelete);
+    return Results.NoContent();
+});
+
 
 app.Run();
