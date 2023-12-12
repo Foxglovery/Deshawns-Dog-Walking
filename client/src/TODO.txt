@@ -1,2 +1,1 @@
-in walkers, make extend isDisplayed to encompass the add dog button, and render a Minus when open.
-Also Only one key item should toggle at a time
+Figure out how to re-render page upon deletion

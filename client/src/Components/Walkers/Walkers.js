@@ -36,7 +36,8 @@ export default function Walkers() {
   const handleClick = (id) => {
     navigate(`/walkerDogs/${id}`);
   };
-
+//here is where the details open, changing the value of id to true made them only open one at a time.
+//look at old branch to see difference
   const handleDetails = (id) => {
     setDetailsOpen(() => ({
       [id]: true,
